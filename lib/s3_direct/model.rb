@@ -5,7 +5,7 @@ module S3Direct
     FORWARDABLE_METHODS = [:url]
 
     DEFAULT_OPTIONS = {
-      bucket: ENV["S3_DIRECT_BUCKET"],
+      bucket: S3Direct.default_bucket,
       policy: { # @see http://docs.aws.amazon.com/AWSRubySDK/latest/AWS/S3/PresignedPost.html
         secure: true,
         expires: 1800, # seconds
