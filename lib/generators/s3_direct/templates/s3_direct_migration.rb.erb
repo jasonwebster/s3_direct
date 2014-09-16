@@ -1,0 +1,12 @@
+class <%= migration_class_name %> < ActiveRecord::Migration
+  def change
+    change_table :<%= table_name %> do |t|
+<% file_names.each do |file| -%>
+      t.string :<%= file %>_key
+      t.string :<%= file %>_content_type
+      t.integer :<%= file %>_content_length
+<% end -%>
+    end
+  end
+end
+

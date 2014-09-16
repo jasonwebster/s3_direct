@@ -18,14 +18,14 @@ module S3Direct
       def has_s3_file(name = :file, options = {})
         S3Direct.options.set(self, name, options.merge(name: name).reverse_merge(DEFAULT_OPTIONS))
 
-        instance_accessor = "#{ name }_object"
+        instance_accessor = name
         instance_variable = "@s3_direct_" + instance_accessor
 
         define_method instance_accessor do
           options = S3Direct.options.get(self.class, name)
 
           instance_variable_get(instance_variable) || instance_variable_set(
-            instance_variable, S3Direct::Object.new(self, name, options)
+            instance_variable, S3Direct::Object.new(self, "#{name}_key", options)
           )
         end
 
