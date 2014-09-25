@@ -18,10 +18,9 @@ module S3Direct
       def has_s3_file(name = :file, options = {})
         S3Direct.options.set(self, name, options.merge(name: name).reverse_merge(DEFAULT_OPTIONS))
 
-        instance_accessor = name
-        instance_variable = "@s3_direct_" + instance_accessor
+        instance_variable = "@s3_direct_#{name}"
 
-        define_method instance_accessor do
+        define_method name do
           options = S3Direct.options.get(self.class, name)
 
           instance_variable_get(instance_variable) || instance_variable_set(
@@ -29,7 +28,7 @@ module S3Direct
           )
         end
 
-        delegate *FORWARDABLE_METHODS, to: instance_accessor, prefix: name
+        delegate *FORWARDABLE_METHODS, to: name, prefix: name
       end
     end
 
